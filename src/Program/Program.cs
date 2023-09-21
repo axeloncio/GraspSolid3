@@ -26,9 +26,18 @@ namespace Full_GRASP_And_SOLID
             recipe.AddStep(new Step(GetProduct("Café"), 100, GetEquipment("Cafetera"), 120));
             recipe.AddStep(new Step(GetProduct("Leche"), 200, GetEquipment("Hervidor"), 60));
 
-            AllInOnePrinter printer = new AllInOnePrinter();
-            printer.PrintRecipe(recipe, Destination.Console);
-            printer.PrintRecipe(recipe, Destination.File);
+            IPrinter printer = new TemplateConsole();
+            printer.PrintRecipe(recipe);
+
+            IPrinter printer2 = new PrintFile();
+            printer2.PrintRecipe(recipe);
+
+            /*
+            El principio que se usa es SRP, ya que la clase Recipe tiene una única razón de cambio, 
+            que es cambiar la forma en la que se imprime la receta.
+            El patrón que se usa es Expert, ya que la clase Recipe es la experta en conocer los datos necesarios para imprimir la receta.
+            Se usa Polymorphism, ya que se puede usar la clase PrintFile o TemplateConsole para imprimir la receta.
+            */
         }
 
         private static void PopulateCatalogs()
